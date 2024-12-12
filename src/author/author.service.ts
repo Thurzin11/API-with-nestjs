@@ -26,7 +26,7 @@ export class AuthorService {
   }
 
   update(id: number, updateAuthorDto: UpdateAuthorDto) {
-    return `This action updates a #${id} author`;
+    return this.authorRepository.update(id, updateAuthorDto);
   }
 
   remove(id: number) {
