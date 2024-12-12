@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
+import { AuthorModule } from './author/author.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PostsModule } from './posts/posts.module';
       }),
     }),
     PostsModule,
+    AuthorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
