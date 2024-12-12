@@ -6,7 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthorService } from './author.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
@@ -27,12 +29,20 @@ export class AuthorController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.authorService.findOne(+id);
+  async findOne(@Res() res: Response, @Param('id') id: string) {
+    const post = await this.authorService.findOne(+id);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    return res.status(200).json(post);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) {
+  update(
+    @Res() res: Response,
+    @Param('id') id: string,
+    @Body() updateAuthorDto: UpdateAuthorDto,
+  ) {
     return this.authorService.update(+id, updateAuthorDto);
   }
 
