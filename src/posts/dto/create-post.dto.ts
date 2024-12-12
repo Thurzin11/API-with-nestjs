@@ -1,1 +1,4 @@
-export class CreatePostDto {}
+export class CreatePostDto {
+  author: string;
+  content: string;
+}
