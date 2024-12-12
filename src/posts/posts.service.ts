@@ -25,8 +25,9 @@ export class PostsService {
     return await this.postRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+    const post: Post = await this.postRepository.findOne({ where: { id } });
+    return post;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
