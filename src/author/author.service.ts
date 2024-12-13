@@ -30,6 +30,6 @@ export class AuthorService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} author`;
+    return this.authorRepository.delete(id);
   }
 }

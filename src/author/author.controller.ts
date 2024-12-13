@@ -19,7 +19,6 @@ export class AuthorController {
 
   @Post()
   create(@Body() createAuthorDto: CreateAuthorDto) {
-    console.log(createAuthorDto);
     return this.authorService.create(createAuthorDto);
   }
 
@@ -38,16 +37,24 @@ export class AuthorController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Res() res: Response,
     @Param('id') id: string,
     @Body() updateAuthorDto: UpdateAuthorDto,
   ) {
-    return this.authorService.update(+id, updateAuthorDto);
+    const authorUpdated = await this.authorService.update(+id, updateAuthorDto);
+    if (authorUpdated.affected === 0) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
+    return res.status(200).json({ messge: 'Author updated successfully' });
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authorService.remove(+id);
+  async remove(@Param('id') id: string, @Res() res: Response) {
+    const isDeleted = await this.authorService.remove(+id);
+    if (isDeleted.affected === 0) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
+    return res.status(200).json({ message: 'Author deleted successfully' });
   }
 }
