@@ -18,6 +18,7 @@ export class PostsService {
       return await this.postRepository.save(post);
     } catch (error) {
       console.log(error);
+      return false;
     }
   }
 
@@ -33,14 +34,14 @@ export class PostsService {
   }
 
   async update(id: number, updatePostDto: UpdatePostDto) {
-    const postFound: Post = await this.findOne(id);
-    if (!postFound) {
-      return `Post with id ${id} not found`;
-    }
-    return `This action updates a #${id} post`;
+    const postUpdated = await this.postRepository.save({
+      id,
+      ...updatePostDto,
+    });
+    return postUpdated;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} post`;
+    return this.postRepository.delete(id);
   }
 }
