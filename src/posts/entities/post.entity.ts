@@ -4,6 +4,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -16,4 +17,6 @@ export class Post {
   author: Author;
   @Column()
   content: string;
+  @OneToMany(() => Post, (posts) => posts.comments)
+  comments: Comment[];
 }
