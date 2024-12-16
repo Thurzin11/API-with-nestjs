@@ -1,4 +1,5 @@
 import { Author } from 'src/author/entities/author.entity';
+import { Comment } from 'src/comments/entities/comment.entity';
 import {
   Column,
   Entity,
@@ -17,6 +18,8 @@ export class Post {
   author: Author;
   @Column()
   content: string;
-  @OneToMany(() => Post, (posts) => posts.comments)
+  @OneToMany(() => Comment, (comment) => comment.post, { eager: true })
   comments: Comment[];
+  @Column({ nullable: true })
+  publishedAt: Date;
 }

@@ -15,6 +15,7 @@ export class PostsService {
   async create(createPostDto: CreatePostDto) {
     try {
       const post = this.postRepository.create(createPostDto);
+      post.publishedAt = new Date();
       return await this.postRepository.save(post);
     } catch (error) {
       console.log(error);
